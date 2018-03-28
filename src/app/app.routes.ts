@@ -11,7 +11,7 @@ import { CreteAccountComponent } from './components/crete-account/crete-account.
 
 // Route Configuration
 export const routes: Routes = [
-    { path: '', component: LoginComponent },
+    { path: '', component: CreteAccountComponent },
     { path: 'main', component: LoginComponent },
     { path: 'forgotPassword', component: ForgotPasswordComponent },
     { path: 'createAccount', component: CreteAccountComponent }
