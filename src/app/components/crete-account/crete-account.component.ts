@@ -10,10 +10,21 @@ export class CreteAccountComponent implements OnInit {
   constructor(private serviceCall: ApiServiceService) { }
 
   ngOnInit() {
-    this.serviceCall.call('http://34.245.8.159:8091/i4gorigin.accounts/getBaseCountryParamsOfSeller').subscribe(data => {
+    this.serviceCall.getCall('http://34.245.8.159:8091/i4gorigin.accounts/getBaseCountryParamsOfSeller').subscribe(data => {
       console.log((<any>data)._body);
       const dataaa  = JSON.parse((<any>data)._body);
       console.log(dataaa);
+  });
+const postData = {
+  'Language': {
+    'LanguageName': 'English',
+    'LanguageOperationTypes': {
+      'OperationType': 'CUSTOMER_TYPE'
+    }
+  }
+};
+  this.serviceCall.postCall('http://34.245.8.159:8091/i4gorigin.accounts/getLanguageKeywords', postData).subscribe(data => {
+    console.log((<any>data)._body);
   });
 }
   }

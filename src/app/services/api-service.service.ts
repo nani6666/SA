@@ -11,7 +11,8 @@ export class ApiServiceService {
   headers: any;
   constructor(private _http: Http) { }
 
-  call(url): Observable<any> {
+  /* get call starts */
+  getCall(url): Observable<any> {
     this.username = 'raju';
     this.password = 'raju';
     this.headers = new Headers();
@@ -22,4 +23,19 @@ export class ApiServiceService {
       .map((res: Response) => res)
       .catch((error: any) => error);
   }
+   /* get call ends */
+
+    /* post calls starts */
+    postCall(url, data): Observable<any[]> {
+      this.username = 'raju';
+      this.password = 'raju';
+      this.headers = new Headers();
+      this.headers.append('services-testing', 'services-testing');
+      this.headers.append('Authorization', 'Basic ' + btoa(this.username + ':' + this.password));
+      this.headers.append('Content-Type', 'application/json');
+      return this._http.post(url, data , {headers: this.headers})
+        .map((res: Response) => res)
+        .catch((error: any) => Observable.throw(error || 'Server error'));
+       }
+    /*post calls Ends*/
 }
