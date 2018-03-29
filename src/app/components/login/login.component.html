@@ -9,9 +9,8 @@
               <div class="form-group languages-block ">
                 <form action="index.html" method="post" enctype="multipart/form-data" id="bt-language">
                   <a class="btn btn-xs dropdown-toggle" data-toggle="dropdown"> <img src="./assets/image/demo/flags/gb.png" alt="English" title="English"> <span class="">English</span> <span class="fa fa-angle-down"></span> </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="index.html"><img class="image_flag" src="./assets/image/demo/flags/gb.png" alt="English" title="English" /> English </a></li>
-                    <li> <a href="index.html"> <img class="image_flag" src="./assets/image/demo/flags/lb.png" alt="Arabic" title="Arabic" /> Arabic </a> </li>
+                  <ul class="dropdown-menu" *ngFor="let lang of langobj">
+                    <li><a><img class="image_flag" src="{{lang.langImg}}" alt="{{lang.LanguageName}}" title="{{lang.LanguageName}}" /> {{lang.LanguageName}} </a></li>
                   </ul>
                 </form>
               </div>
@@ -55,7 +54,7 @@
                     <label class="checkbox">Keep me signed in </label>
                   </div>
                 </div>
-                <button class="btn btn-lg btn-block btn-primary" type="submit"> Sign in</button>
+                <button class="btn btn-lg btn-block btn-primary" type="submit" (click)="onSubmit()" > Sign in</button>
               </form>
               <a class="forgotLnk" href="#">Forgot password?</a>
               <div class="or-box"> <span class="or">OR continue with</span>
