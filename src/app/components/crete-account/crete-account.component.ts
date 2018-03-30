@@ -12,11 +12,14 @@ export class CreteAccountComponent implements OnInit {
    langArray: any;
    langobj: Array<Object> = [];
    iama: boolean;
+   countries: any;
+   countryobj: any;
   constructor(private serviceCall: ApiServiceService) { }
 
   ngOnInit() {
     this.getlanguages();
     this.iama = false;
+    this.getCountries();
   //   this.serviceCall.getCall('http://34.245.8.159:8091/i4gorigin.accounts/getBaseCountryParamsOfSeller').subscribe(data => {
   //     console.log((<any>data)._body);
   //     const dataaa  = JSON.parse((<any>data)._body);
@@ -40,9 +43,9 @@ getlanguages() {
    this.langobj = [];
     this.languages = JSON.parse((<any>data)._body);
     this.langArray = this.languages.Languages.Language ;
-     console.log(this.langArray);
+     // console.log(this.langArray);
     this.langArray.forEach(ele => {
-       console.log(ele.LanguageName);
+      // console.log(ele.LanguageName);
       if (ele.LanguageName == 'English'){
        this.langobj.push({'LanguageName': ele.LanguageName, 'LanguageID': ele.LanguageID ,
       'langImg': './assets/image/demo/flags/gb.png'});
@@ -51,10 +54,22 @@ getlanguages() {
        'langImg': './assets/image/demo/flags/lb.png'});
       }
     });
-    console.log( this.langobj);
+    // console.log( this.langobj);
 
   });
 }
+
+/* Get Countries Starts */
+getCountries() {
+  this.serviceCall.getCall('getCountriesList').subscribe(data => {
+    this.countryobj = JSON.parse((<any>data)._body);
+    console.log(this.countryobj);
+    this.countries = this.countryobj.Countries.Country;
+    console.log(this.countries);
+  });
+}
+
+/* Get Countries Ends */
   }
 
 

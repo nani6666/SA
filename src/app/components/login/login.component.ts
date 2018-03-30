@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(value) {
     // this.formSubmitAttempt = true;
-    console.log(value.controls.Username);
+    // console.log(value.controls.Username);
     if (value.controls.Username.valid === false) {
       this.emailfieldVald = true;
     } else if (value.controls.Password.valid === false) {
@@ -48,9 +48,9 @@ export class LoginComponent implements OnInit {
       this.passwordField = true;
     } else {
       this.passwordField = false;
-      console.log('form submitted');
+      // console.log('form submitted');
       this.restservice.postCall('authorizeUser', value.value).subscribe(data => {
-        console.log(data);
+       // console.log(data);
       }, err => {
         this.restservice.customalert('' , 'Invalid username/password, Please enter correct details' ,
         'Try Again' , 'btn-red' , 'red');
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
           'langImg': './assets/image/demo/flags/lb.png'});
          }
        });
-       console.log( this.langobj);
+      // console.log( this.langobj);
 
      });
    }
