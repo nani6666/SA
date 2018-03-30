@@ -11,18 +11,51 @@ export class LoginComponent implements OnInit {
    languages: any;
    langArray: any;
    langobj: Array<Object> = [];
-  constructor(public router: Router, public restservice: ApiServiceService) { }
+   login: FormGroup;
+   emailfieldVald: boolean;
+   passwordField: boolean;
+   // private formSubmitAttempt: boolean;
+  emailRegex;
+  password;
+  isPasswordForgot: boolean;
+  isPasswordCorrect: boolean;
+  constructor(private formBuilder: FormBuilder, private router: Router,
+           public restservice: ApiServiceService) {
+            this.emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            this.password = null;
+            }
 
   ngOnInit() {
-   this.getlanguages();
+    this.createform();
+    this.getlanguages();
+    this.emailfieldVald = false;
+    this.passwordField = false;
   }
+   createform() {
+    this.login = this.formBuilder.group({
+      Username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50), Validators.pattern(this.emailRegex)]],
+      Password: [this.password, [Validators.required]],
+    });
+   }
 
-  onSubmit() {
-    this.restservice.postCall('authorizeUser', '').subscribe(data => {
-      console.log(data);
-    }, err => {
-       console.log('daata');
-  });
+  onSubmit(value) {
+    // this.formSubmitAttempt = true;
+    console.log(value.controls.Username);
+    if (value.controls.Username.valid === false) {
+      this.emailfieldVald = true;
+    } else if (value.controls.Password.valid === false) {
+      this.emailfieldVald = false;
+      this.passwordField = true;
+    } else {
+      this.passwordField = false;
+      console.log('form submitted');
+      this.restservice.postCall('authorizeUser', value.value).subscribe(data => {
+        console.log(data);
+      }, err => {
+        this.restservice.customalert('' , 'Invalid username/password, Please enter correct details' ,
+        'Try Again' , 'btn-red' , 'red');
+    });
+    }
    }
 
    getlanguages() {

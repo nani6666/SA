@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+declare const jQuery: any;
  const api = 'http://34.245.8.159:8091/i4gorigin.accounts/';
 @Injectable()
 export class ApiServiceService {
@@ -40,5 +41,19 @@ export class ApiServiceService {
         .catch((error: any) => Observable.throw(error || 'Server error'));
        }
     /*post calls Ends*/
+
+    /*custom alerts starts */
+    customalert(a, b, c, d, color) {jQuery.confirm({ title: a, content: b, type: color, theme: 'material', typeAnimated: true,
+    buttons: {
+        button1: {
+            text: c ,
+            btnClass: d,
+            action: function() {
+            }
+         } ,
+       }
+    });
+  }
+    /*custom alerts ends */
 
 }
