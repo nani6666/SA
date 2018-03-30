@@ -63,9 +63,9 @@ getlanguages() {
 getCountries() {
   this.serviceCall.getCall('getCountriesList').subscribe(data => {
     this.countryobj = JSON.parse((<any>data)._body);
-    console.log(this.countryobj);
+    // console.log(this.countryobj);
     this.countries = this.countryobj.Countries.Country;
-    console.log(this.countries);
+   //  console.log(this.countries);
   });
 }
 
