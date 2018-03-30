@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
        // console.log(this.langArray);
        this.langArray.forEach(ele => {
          // console.log(ele.LanguageName);
-         if (ele.LanguageName == 'English'){
+         if (ele.LanguageName == 'English') {
           this.langobj.push({'LanguageName': ele.LanguageName, 'LanguageID': ele.LanguageID ,
          'langImg': './assets/image/demo/flags/gb.png'});
          } else if (ele.LanguageName == 'French'){

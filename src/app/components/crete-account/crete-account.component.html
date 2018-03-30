@@ -10,9 +10,8 @@
               <div class="form-group languages-block ">
                 <form action="index.html" method="post" enctype="multipart/form-data" id="bt-language">
                   <a class="btn btn-xs dropdown-toggle" data-toggle="dropdown"> <img src="./assets/image/demo/flags/gb.png" alt="English" title="English"> <span class="">English</span> <span class="fa fa-angle-down"></span> </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="index.html"><img class="image_flag" src="./assets/image/demo/flags/gb.png" alt="English" title="English" /> English </a></li>
-                    <li> <a href="index.html"> <img class="image_flag" src="./assets/image/demo/flags/lb.png" alt="Arabic" title="Arabic" /> Arabic </a> </li>
+                  <ul class="dropdown-menu" *ngFor="let lang of langobj">
+                    <li><a><img class="image_flag" src="{{lang.langImg}}" alt="{{lang.LanguageName}}" title="{{lang.LanguageName}}" /> {{lang.LanguageName}} </a></li>
                   </ul>
                 </form>
               </div>
@@ -24,8 +23,8 @@
                 <ul class="top-link list-inline">
                  <!-- <li class="account" id="my_account"><a href="my-account.html" title="My Account" class="btn btn-xs dropdown-toggle" > <i class="fa fa-user" ></i> My Account </a></li>
                   <li class="wishlist"><a href="wishlist.html" class="top-link-wishlist" title="wishlist"><i class="fa fa-heart" ></i> My Wish List</a></li>-->
-                  <li class="checkout"><a href="#" class="top-link-checkout" title="Checkout"><i class="fa fa-question-circle" ></i> Help</a></li>
-                  <li class="signin"><a href="login.html" class="top-link-checkout" title="login"><i class="fa fa-lock" ></i> Sign In</a></li>
+                  <li class="checkout"><a class="top-link-checkout" title="Checkout"><i class="fa fa-question-circle" ></i> Help</a></li>
+                  <li class="signin"><a routerLink="./../" class="top-link-checkout" title="login"><i class="fa fa-lock" ></i> Sign In</a></li>
                 </ul>
               </div>
             </div>
@@ -67,10 +66,11 @@
     <!-- Main Container  -->
     <div class="main-container container">
       <ul class="breadcrumb">
-        <li><a href="#"><i class="fa fa-home"></i></a></li>
-        <li><a href="#">Account</a></li>
-        <li><a href="#">Register</a></li>
+        <li><a ><i class="fa fa-home"></i></a></li>
+        <li><a >Account</a></li>
+        <li><a >Register</a></li>
       </ul>
+      
       <div class="row">
         <div class="col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2 form-box">
           <form role="form" action="" method="post" class="f1">
@@ -91,18 +91,18 @@
                 <p>Verification</p>
               </div>
             </div>
-            <fieldset>
+            <fieldset *ngIf="iama">
               <div class="col-md-12">
                 <h4>Tell us who you are:</h4>
                 <div class="form-group">
                   <div id="affected">
-                    <input type="radio" name="set" title="<i class='fa fa-user'> </i>  Seller from India">
+                    <input type="radio" name="set" title="<i class='fa fa-user'></i>  Seller from India">
                     <input type="radio" name="set" title="<i class='fa fa-shopping-cart'></i> Buyer outside India">
                   </div>
                 </div>
                 <div class="clear mrg45B"></div>
                 <div class="f1-buttons">
-                  <button type="button" class="btn btn-next">Next</button>
+                  <button type="button" class="btn btn-next" > Next </button>
                 </div>
 
               </div>
@@ -179,7 +179,7 @@
                 <div>
                   <div class="form-group col-sm-4 pad0L">
                     <input type="text" class="form-control" name="otp" placeholder="Enter your OTP number" required>
-                    <a href="#">Resend OTP</a> </div>
+                    <a >Resend OTP</a> </div>
                   <button type="submit" class="btn btn-info  col-sm-2">Verify</button>
                 </div>
                 <div class="clear mrg20B"></div>
@@ -188,7 +188,7 @@
                 <div>
                   <div class="form-group col-sm-4 pad0L">
                     <input type="text" class="form-control" name="otp" placeholder="Enter your OTP number" required>
-                    <a href="#">Resend OTP</a> </div>
+                    <a >Resend OTP</a> </div>
                   <button type="submit" class="btn btn-info  col-sm-2">Verify</button>
                 </div>
                 <div class="clear mrg20B"></div>
@@ -242,11 +242,11 @@
                 <h3 class="modtitle">My Account</h3>
                 <div class="modcontent">
                   <ul class="menu">
-                    <li><a href="#">Brands</a></li>
+                    <li><a >Brands</a></li>
                     <li><a href="gift-voucher.html">Gift Vouchers</a></li>
-                    <li><a href="#">Affiliates</a></li>
-                    <li><a href="#">Specials</a></li>
-                    <li><a href="#" target="_blank">Our Blog</a></li>
+                    <li><a >Affiliates</a></li>
+                    <li><a >Specials</a></li>
+                    <li><a  target="_blank">Our Blog</a></li>
                   </ul>
                 </div>
               </div>
@@ -257,7 +257,7 @@
                 <div class="modcontent">
                   <ul class="contact-address">
                     <li><span class="fa fa-map-marker"></span> My Company, 42 avenue des Champs Elysées 75000 Paris France</li>
-                    <li><span class="fa fa-envelope-o"></span> Email: <a href="#"> sales@yourcompany.com</a></li>
+                    <li><span class="fa fa-envelope-o"></span> Email: <a > sales@yourcompany.com</a></li>
                     <li><span class="fa fa-phone">&nbsp;</span> Phone 1: 0123456789 <br>
                       Phone 2: (123) 4567890</li>
                   </ul>
@@ -286,7 +286,7 @@
                 <h3 class="modtitle">Follow Us</h3>
                 <div class="modcontent">
                   <div class="icons-social">
-                    <div class="list-inline"> <a title="Facebook" href="http://www.facebook.com/MagenTech" target="_blank"> <span class="fa fa-facebook icon-circled icon-color"></span> </a> <a title="Twitter" href="https://twitter.com/magentech" target="_blank"> <span class="fa fa-twitter icon-circled icon-color"></span> </a> <a title="Google+" href="https://plus.google.com/u/0/+Smartaddons" target="_blank"> <span class="fa fa-google-plus icon-circled icon-color"></span> </a> <a title="Pinterest" href="#" target="_blank"> <span class="fa fa-instagram icon-circled icon-color"></span> </a> </div>
+                    <div class="list-inline"> <a title="Facebook" href="http://www.facebook.com/MagenTech" target="_blank"> <span class="fa fa-facebook icon-circled icon-color"></span> </a> <a title="Twitter" href="https://twitter.com/magentech" target="_blank"> <span class="fa fa-twitter icon-circled icon-color"></span> </a> <a title="Google+" href="https://plus.google.com/u/0/+Smartaddons" target="_blank"> <span class="fa fa-google-plus icon-circled icon-color"></span> </a> <a title="Pinterest"  target="_blank"> <span class="fa fa-instagram icon-circled icon-color"></span> </a> </div>
                   </div>
                 </div>
               </div>
