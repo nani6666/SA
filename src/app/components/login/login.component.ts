@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       this.passwordField = false;
       // console.log('form submitted');
       this.restservice.postCall('authorizeUser', value.value).subscribe(data => {
-       // console.log(data);
+       console.log(data);
       }, err => {
         this.restservice.customalert('' , 'Invalid username/password, Please enter correct details' ,
         'Try Again' , 'btn-red' , 'red');
