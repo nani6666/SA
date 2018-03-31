@@ -146,12 +146,12 @@
               <div class="col-md-12" style="padding-bottom:50px;">
 
                 <div class="form-group col-md-12 pad0A">
-                  <label class="" >Company Name</label>
-                  <input type="text" name=" " placeholder="Company Name" [(ngModel)]="companyName"
-                  class="form-control" formControlName="companyName">
+                  <label class="" >Company Name <span><strong>*</strong></span></label>
+                  <input type="text" name=" " placeholder="Company Name" formControlName="companyName" [(ngModel)]="companyName"
+                  class="form-control" >
                 </div>
                 <div class="form-group col-md-6 pad0L">
-                  <label class="" >Company Location</label>
+                  <label class="" >Company Location <span><strong>*</strong></span></label>
                   <select  class="form-control" #t [(ngModel)]="countrydata"  
                   (change)="countryData(t.value)" formControlName="companyLocation">
                     <option value="">Select from list</option>
@@ -159,16 +159,16 @@
                   </select>
                 </div>
                 <div class="form-group  col-md-6 pad0R">
-                  <label class="" >Company Email</label>
+                  <label class="" >Company Email <span><strong>*</strong></span></label>
                   <input type="text" name=" " placeholder="Company Email" value=""  class="form-control"
                   formControlName="companyEmail" [(ngModel)]="companyEmail">
                 </div>
                 <div class="form-group col-md-6 pad0L">
-                  <label class="" >Password</label>
+                  <label class="" >Password <span><strong>*</strong></span></label>
                   <input type="password"  [(ngModel)]="companyPswrd" placeholder="Password..." class="form-control" formControlName="companyPswrd">
                 </div>
                 <div class="form-group col-md-6 pad0R">
-                  <label class="" >Confirm password</label>
+                  <label class="" >Confirm password <span><strong>*</strong></span></label>
                   <input type="password"  placeholder="Confirm password..." class="form-control"
                   formControlName="companyCnfPswd" [(ngModel)]="companyCnfPswd" (keyup)="passwordMatch()">
                   <div class="text-danger" *ngIf="checkingPassword">
@@ -182,24 +182,24 @@
                       <input type="text"  placeholder="" value={{countryCode}} disabled class="form-control">
                     </div>
                     <div class="col-md-3 pad0L">
-                      <input type="text"  placeholder="" class="form-control">
+                      <input type="text"  placeholder="" class="form-control" formControlName="companylandline1" [(ngModel)]="companylandline1">
                     </div>
                     <div class="col-md-6 pad0L pad0R">
-                      <input type="text"  placeholder="" class="form-control">
+                      <input type="text"  placeholder="" class="form-control" formControlName="companylandline2" [(ngModel)]="companylandline2">
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-6 pad0R">
-                  <label class="" >Company Mobile No.</label>
+                  <label class="" >Company Mobile No. <span><strong>*</strong></span></label>
                   <div>
                     <div class="col-md-3 pad0L">
                       <input type="text"  placeholder="" value={{countryCode}} disabled class="form-control">
                     </div>
                     <div class="col-md-3 pad0L">
-                      <input type="text"  placeholder="" class="form-control">
+                      <input type="text"  placeholder="" class="form-control" formControlName="companyMobile1" [(ngModel)]="companyMobile1">
                     </div>
                     <div class="col-md-6 pad0L pad0R">
-                      <input type="text"  placeholder="" class="form-control">
+                      <input type="text"  formControlName="companyMobile2" [(ngModel)]="companyMobile2" placeholder="" class="form-control">
                     </div>
                   </div>
                 </div>

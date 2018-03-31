@@ -24,10 +24,18 @@ export class CreteAccountComponent implements OnInit {
    companyCnfPswd: any;
    createAcc: FormGroup;
    checkingPassword: boolean;
+   companylandline1: any;
+   companylandline2: any;
+   companyMobile1: any;
+   companyMobile2: any;
    whoAmI: any;
    emailRegex;
+   RegisteredBy: any;
+   CompanyCurrency: any;
    emailIDregister: any;
+   mobileIDregister: any;
    isEmailRegistered: boolean;
+   ismobileResgistred: boolean;
    passwordRegex;
   constructor(private serviceCall: ApiServiceService,
     private formBuilder: FormBuilder, private router: Router) { 
@@ -67,7 +75,10 @@ const postData = {
     companyPswrd : ['', [Validators.required , Validators.minLength(5), Validators.maxLength(50), Validators.pattern(this.passwordRegex)]],
     companyCnfPswd : ['', [Validators.required , Validators.minLength(5), Validators.maxLength(50),
                Validators.pattern(this.passwordRegex)]],
-
+    companyMobile2: ['', [Validators.required]],
+    companyMobile1: ['', ''],
+    companylandline1: ['', ''],
+    companylandline2: ['', '']
   });
  }
 
@@ -129,15 +140,20 @@ nexttab(val) {
 console.log(this.whoAmI);
 
 if (this.whoAmI === undefined) {
-  this.serviceCall.customalert('' , 'Please Click Any one button' ,
-  'Try Again' , 'btn-red' , 'red');
+  this.serviceCall.customalert('' , 'Please Click any button' ,
+  'ok' , 'btn-red' , 'red');
 } else {
   if (val == 'iama') {
     this.iama = false ;
     this.companyInfo = true;
     this.verification = false ;
     } else if (val == 'cmpnyInfo') {
-      this.isemailRegister();
+      if (this.createAcc.valid != true) {
+        this.serviceCall.customalert('' , 'Please Enter the mandiatory Fields' ,
+        'ok' , 'btn-red' , 'red');
+      } else {
+        this.isemailRegister();
+      }
    }
 }
 }
@@ -157,7 +173,7 @@ previoustab() {
     this.countryCode = this.countrydata.callingCode ;
 
   }
-  /*country change option starts*/
+  /*country change option ends*/
   isemailRegister() {
     const emaili = {
       'email':  this.companyEmail
@@ -168,15 +184,82 @@ previoustab() {
       console.log(this.emailIDregister.message);
       if (this.emailIDregister.message == 'true') {
        this.isEmailRegistered = true ;
+       this.serviceCall.customalert('' , 'Email is already Exits' ,
+         'ok' , 'btn-red' , 'red');
       } else {
         this.isEmailRegistered = false ;
-        this.iama =  false ;
-        this.companyInfo = false;
-        this.verification = true ;
+        this.ismobileRegistred();
       }
     });
   }
 
+  ismobileRegistred() {
+    const mobile = {
+      'code': this.countrydata.callingCode,
+      'number': this.companyMobile2
+    };
+   // console.log(mobile);
+    this.serviceCall.postCall('isMobileRegistered', mobile).subscribe(data => {
+      this.mobileIDregister = JSON.parse((<any>data)._body);
+      console.log(this.mobileIDregister.message);
+      if (this.mobileIDregister.message == 'true') {
+       this.ismobileResgistred = true ;
+       this.serviceCall.customalert('' , 'Mobile is already Exits' ,
+         'ok' , 'btn-red' , 'red');
+      } else {
+        this.ismobileResgistred = false ;
+        this.postcallCopanyInfo();
+      }
+    });
   }
 
+  postcallCopanyInfo() {
+      this.iama =  false ;
+      this.companyInfo = false;
+      this.verification = true ;
+     // console.log(this.countrydata);
+     if (this.whoAmI == 'seller') {
+      this.RegisteredBy = 'Seller';
+     } else if (this.whoAmI == 'buyer') {
+      this.RegisteredBy = 'Buyer';
+     } else if (this.whoAmI == 'frighten') {
+      this.RegisteredBy = 'Frighten';
+     }
+      const buyer = {
+        'Company': {
+          'CompanyName': this.companyName,
+          'CompanyDefaultLanguage': 'English',
+          'CompanyEmail': this.companyEmail,
+          'CompanyCurrency': this.countrydata.currencies[0].code,
+          'Password': this.companyPswrd,
+          'CompanyContactPersonFirstName': 'fName',
+          'CompanyContactPersonSurname': 'sName',
+          'CompanyBusinessLandlineCode': this.countrydata.callingCode,
+          'CompanyBusinessLandlineNumber': (this.companylandline2 === undefined ) ? '123' : this.companylandline2,
+          'CompanyBusinessMobileCode': this.countrydata.callingCode,
+          'CompanyBusinessMobileNumber': this.companyMobile2,
+          'BusinessLocation': this.countrydata.name,
+          'AgreeToRecieveEmail': 'Y',
+          'AgreeToRecieveSMS': 'Y',
+          'AgreeTermsAndConditions': 'Y',
+          'RegisteredBy': this.RegisteredBy
+        }
+      };
+      if (this.whoAmI == 'seller') {
+        this.RegisteredBy = 'Seller';
+        console.log(buyer);
+        this.serviceCall.postCall('saveSellerProfile', buyer).subscribe(data => {
+          console.log(data);
+        });
+      } else if (this.whoAmI == 'buyer') {
+        this.serviceCall.postCall('saveBuyerProfile', buyer).subscribe(data => {
+          console.log(data);
+        });
+      } else if (this.whoAmI == 'frighten') {
+        this.serviceCall.postCall('saveFreightProfile', buyer).subscribe(data => {
+          console.log(data);
+        });
+      }
+    }
 
+}
