@@ -23,7 +23,7 @@
                 <ul class="top-link list-inline">
                  <!-- <li class="account" id="my_account"><a href="my-account.html" title="My Account" class="btn btn-xs dropdown-toggle" > <i class="fa fa-user" ></i> My Account </a></li>
                   <li class="wishlist"><a href="wishlist.html" class="top-link-wishlist" title="wishlist"><i class="fa fa-heart" ></i> My Wish List</a></li>-->
-                  <li class="checkout"><a class="top-link-checkout" title="Checkout"><i class="fa fa-question-circle" ></i> Help</a></li>
+                  <li class="checkout"><a href="http://help.market.co.za/" target="_blank" class="top-link-checkout" title="Checkout"><i class="fa fa-question-circle" ></i> Help</a></li>
                   <li class="signin"><a routerLink="./../" class="top-link-checkout" title="login"><i class="fa fa-lock" ></i> Sign In</a></li>
                 </ul>
               </div>
@@ -66,79 +66,120 @@
     <!-- Main Container  -->
     <div class="main-container container">
       <ul class="breadcrumb">
-        <li><a ><i class="fa fa-home"></i></a></li>
+        <li><a href="http://market.co.za/" target="_blank"><i class="fa fa-home"></i></a></li>
         <li><a >Account</a></li>
         <li><a >Register</a></li>
       </ul>
       
       <div class="row">
         <div class="col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2 form-box">
-          <form role="form" action="" method="post" class="f1">
-            <div class="f1-steps">
-              <div class="f1-progress">
-                <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
-              </div>
-              <div class="f1-step active">
-                <div class="f1-step-icon"><i class="fa fa-user"></i></div>
-                <p>I am a</p>
-              </div>
-              <div class="f1-step">
-                <div class="f1-step-icon"><i class="fa fa-id-card-o"></i></div>
-                <p>Company Info</p>
-              </div>
-              <div class="f1-step">
-                <div class="f1-step-icon"><i class="fa fa-check-square-o"></i></div>
-                <p>Verification</p>
-              </div>
-            </div>
-            <fieldset *ngIf="iama">
-              <div class="col-md-12">
+          <form role="form" action="" class="f1" [formGroup]="createAcc">
+            
+            <div *ngIf="iama">
+                <div class="f1-steps">
+                    <div class="f1-progress">
+                      <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" 
+                      style="width: 16.660000000000004%;"></div>
+                    </div>
+                    <div class="f1-step active">
+                      <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                      <p>I am a</p>
+                    </div>
+                    <div class="f1-step">
+                      <div class="f1-step-icon"><i class="fa fa-id-card-o"></i></div>
+                      <p>Company Info</p>
+                    </div>
+                    <div class="f1-step">
+                      <div class="f1-step-icon"><i class="fa fa-check-square-o"></i></div>
+                      <p>Verification</p>
+                    </div>
+                  </div>
+              <div class="col-md-12" style="padding-bottom:50px;">
                 <h4>Tell us who you are:</h4>
                 <div class="form-group">
-                  <div id="affected">
-                    <!-- <input type="radio" name="set" title="<i class='fa fa-user'></i>  Seller from India">
-                    <input type="radio" name="set" title="<i class='fa fa-shopping-cart'></i> Buyer outside India"> -->
-                  </div>
+                    <div id="affected">
+                        <div class="zInputWrapper">
+                              <div class="zInput">
+                                <span style="display:table;width: 100%;height: 100%;cursor:pointer;" (click)="firsttab('seller')">
+                                    <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-user"></i> 
+                                      Seller from India</span></span>
+                              </div>
+                              <div class="zInput">
+                                <span style="display:table;width: 100%;height: 100%;cursor:pointer;"  (click)="firsttab('buyer')">
+                                  <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-shopping-cart"></i> 
+                              Buyer outside India</span></span>
+                            </div>
+                            <div class="zInput">
+                                <span style="display:table;width: 100%;height: 100%; cursor:pointer;"  (click)="firsttab('frighten')">
+                                    <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-shopping-cart"></i> 
+                                Frieght</span></span>
+                            </div>
+                         </div>
+                      </div>
                 </div>
                 <div class="clear mrg45B"></div>
                 <div class="f1-buttons">
-                  <button type="button" class="btn btn-next" > Next </button>
+                  <button type="button" class="btn btn-next" (click)="nexttab('iama')"> Next </button>
                 </div>
 
               </div>
 
-            </fieldset>
-            <fieldset>
-              <div class="col-md-12">
+            </div>
+            <div *ngIf="companyInfo">
+                <div class="f1-steps">
+                    <div class="f1-progress">
+                      <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 49.99333333333334%;"></div>
+                    </div>
+                    <div class="f1-step activated">
+                      <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                      <p>I am a</p>
+                    </div>
+                    <div class="f1-step active">
+                      <div class="f1-step-icon"><i class="fa fa-id-card-o"></i></div>
+                      <p>Company Info</p>
+                    </div>
+                    <div class="f1-step">
+                      <div class="f1-step-icon"><i class="fa fa-check-square-o"></i></div>
+                      <p>Verification</p>
+                    </div>
+                  </div>
+              <div class="col-md-12" style="padding-bottom:50px;">
 
                 <div class="form-group col-md-12 pad0A">
                   <label class="" >Company Name</label>
-                  <input type="text" name=" " placeholder="Company Name" class="form-control">
+                  <input type="text" name=" " placeholder="Company Name" [(ngModel)]="companyName"
+                  class="form-control" formControlName="companyName">
                 </div>
                 <div class="form-group col-md-6 pad0L">
                   <label class="" >Company Location</label>
-                  <select  class="form-control">
+                  <select  class="form-control" #t [(ngModel)]="countrydata"  
+                  (change)="countryData(t.value)" formControlName="companyLocation">
                     <option value="">Select from list</option>
-                    <option *ngFor="let contry of countries" value="{{contry.callingCodes}}">{{contry.name}}</option>
+                    <option *ngFor="let contry of countries" [ngValue]="contry">{{contry.name}}</option>
                   </select>
                 </div>
                 <div class="form-group  col-md-6 pad0R">
                   <label class="" >Company Email</label>
-                  <input type="text" name=" " placeholder="Company Email" value=""  class="form-control">
+                  <input type="text" name=" " placeholder="Company Email" value=""  class="form-control"
+                  formControlName="companyEmail" [(ngModel)]="companyEmail">
                 </div>
                 <div class="form-group col-md-6 pad0L">
                   <label class="" >Password</label>
-                  <input type="password"  placeholder="Password..." class="form-control" >
+                  <input type="password"  [(ngModel)]="companyPswrd" placeholder="Password..." class="form-control" formControlName="companyPswrd">
                 </div>
                 <div class="form-group col-md-6 pad0R">
                   <label class="" >Confirm password</label>
-                  <input type="password"  placeholder="Confirm password..." class="form-control" >
+                  <input type="password"  placeholder="Confirm password..." class="form-control"
+                  formControlName="companyCnfPswd" [(ngModel)]="companyCnfPswd" (keyup)="passwordMatch()">
+                  <div class="text-danger" *ngIf="checkingPassword">
+                    <span><strong>Confirm Password is not matched with Password</strong></span>
+                  </div>
                 </div>
                 <div class="form-group col-md-6 pad0L">
                   <label class="" >Company Landline No.</label>
                   <div>
                     <div class="col-md-3 pad0L">
-                      <input type="text"  placeholder="" class="form-control">
+                      <input type="text"  placeholder="" value={{countryCode}} disabled class="form-control">
                     </div>
                     <div class="col-md-3 pad0L">
                       <input type="text"  placeholder="" class="form-control">
@@ -152,7 +193,7 @@
                   <label class="" >Company Mobile No.</label>
                   <div>
                     <div class="col-md-3 pad0L">
-                      <input type="text"  placeholder="" class="form-control">
+                      <input type="text"  placeholder="" value={{countryCode}} disabled class="form-control">
                     </div>
                     <div class="col-md-3 pad0L">
                       <input type="text"  placeholder="" class="form-control">
@@ -164,14 +205,32 @@
                 </div>
                 <div class="clear mrg20B"></div>
                 <div class="f1-buttons">
-                  <button type="button" class="btn btn-previous">Previous</button>
-                  <button type="button" class="btn btn-next">Next</button>
+                  <button type="button" class="btn btn-previous" (click)="previoustab()">Previous</button>
+                  <button type="button" class="btn btn-next" (click)="nexttab('cmpnyInfo')">Next</button>
                 </div>
               </div>
 
-            </fieldset>
-            <fieldset>
-              <div class="col-md-12">
+            </div>
+            <div *ngIf="verification"> 
+              <div class="f1-steps">
+                <div class="f1-progress">
+                  <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" 
+                  style="width: 83.32666666666668%;"></div>
+                </div>
+                <div class="f1-step activated">
+                  <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                  <p>I am a</p>
+                </div>
+                <div class="f1-step activated">
+                  <div class="f1-step-icon"><i class="fa fa-id-card-o"></i></div>
+                  <p>Company Info</p>
+                </div>
+                <div class="f1-step active">
+                  <div class="f1-step-icon"><i class="fa fa-check-square-o"></i></div>
+                  <p>Verification</p>
+                </div>
+              </div>
+              <div class="col-md-12" style="padding-bottom:50px;">
                 <h4>Verify your Mobile Number:</h4>
                 <p>An OTP has been sent to your Mobile Number. Please enter the 4 digit OTP below for successful verification.</p>
                 <div>
@@ -191,12 +250,12 @@
                 </div>
                 <div class="clear mrg20B"></div>
                 <div class="f1-buttons">
-                  <button type="button" class="btn btn-previous">Previous</button>
+                  <!-- <button type="button" class="btn btn-previous">Previous</button> -->
                   <button type="submit" class="btn btn-submit">Submit</button>
                 </div>
               </div>
 
-            </fieldset>
+            </div>
           </form>
         </div>
       </div>
