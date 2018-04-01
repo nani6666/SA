@@ -30,6 +30,7 @@ export class CreteAccountComponent implements OnInit {
    companyMobile2: any;
    whoAmI: any;
    emailRegex;
+   passwordValid: boolean;
    RegisteredBy: any;
    CompanyCurrency: any;
    emailIDregister: any;
@@ -50,6 +51,7 @@ export class CreteAccountComponent implements OnInit {
     this.checkingPassword = false;
     this.getCountries();
     this.accountCreation();
+    this.passwordValid = false;
   //   this.serviceCall.getCall('http://34.245.8.159:8091/i4gorigin.accounts/getBaseCountryParamsOfSeller').subscribe(data => {
   //     console.log((<any>data)._body);
   //     const dataaa  = JSON.parse((<any>data)._body);
@@ -72,8 +74,8 @@ const postData = {
     companyName: ['', [Validators.required]],
     companyLocation: ['', [Validators.required]],
     companyEmail : ['', [Validators.required , Validators.minLength(5), Validators.maxLength(50), Validators.pattern(this.emailRegex)]],
-    companyPswrd : ['', [Validators.required , Validators.minLength(5), Validators.maxLength(50), Validators.pattern(this.passwordRegex)]],
-    companyCnfPswd : ['', [Validators.required , Validators.minLength(5), Validators.maxLength(50),
+    companyPswrd : ['', [Validators.required , Validators.minLength(8), Validators.maxLength(29), Validators.pattern(this.passwordRegex)]],
+    companyCnfPswd : ['', [Validators.required , Validators.minLength(8), Validators.maxLength(29),
                Validators.pattern(this.passwordRegex)]],
     companyMobile2: ['', [Validators.required]],
     companyMobile1: ['', ''],
@@ -148,7 +150,11 @@ if (this.whoAmI === undefined) {
     this.companyInfo = true;
     this.verification = false ;
     } else if (val == 'cmpnyInfo') {
-      if (this.createAcc.valid != true) {
+      if (this.createAcc.controls.companyPswrd.valid === false) {
+        this.serviceCall.customalert('' , 'Password should be of minimum 8 chars and max 29 chars. Atleast 1 Uppercase,' +
+         '1 Lowercase and 1 special character' ,
+        'ok' , 'btn-red' , 'red');
+      } else if (this.createAcc.valid != true) {
         this.serviceCall.customalert('' , 'Please Enter the mandiatory Fields' ,
         'ok' , 'btn-red' , 'red');
       } else {

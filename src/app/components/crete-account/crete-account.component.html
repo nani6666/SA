@@ -164,9 +164,14 @@
                   formControlName="companyEmail" [(ngModel)]="companyEmail">
                 </div>
                 <div class="form-group col-md-6 pad0L">
+                    <!-- <div class="text-danger">
+                        <p><strong>Password should be of minimum 8 chars and max 29 chars. Atleast 1 Uppercase, 1 Lowercase and 1 special character</strong></p>
+                       </div> -->
                   <label class="" >Password <span><strong>*</strong></span></label>
                   <input type="password"  [(ngModel)]="companyPswrd" placeholder="Password..." class="form-control" formControlName="companyPswrd">
+                  
                 </div>
+               
                 <div class="form-group col-md-6 pad0R">
                   <label class="" >Confirm password <span><strong>*</strong></span></label>
                   <input type="password"  placeholder="Confirm password..." class="form-control"
