@@ -150,12 +150,12 @@ if (this.whoAmI === undefined) {
     this.companyInfo = true;
     this.verification = false ;
     } else if (val == 'cmpnyInfo') {
-      if (this.createAcc.controls.companyPswrd.valid === false) {
+       if (this.createAcc.valid != true) {
+        this.serviceCall.customalert('' , 'Please Enter the mandiatory Fields' ,
+        'ok' , 'btn-red' , 'red');
+      }  if (this.createAcc.controls.companyPswrd.valid === false) {
         this.serviceCall.customalert('' , 'Password should be of minimum 8 chars and max 29 chars. Atleast 1 Uppercase,' +
          '1 Lowercase and 1 special character' ,
-        'ok' , 'btn-red' , 'red');
-      } else if (this.createAcc.valid != true) {
-        this.serviceCall.customalert('' , 'Please Enter the mandiatory Fields' ,
         'ok' , 'btn-red' , 'red');
       } else {
         this.isemailRegister();

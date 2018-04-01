@@ -21,6 +21,9 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@ng-idle/core": "^2.0.0-beta.15",
+    "@ng-idle/keepalive": "^2.0.0-beta.15",
+    "angular2-moment": "^1.8.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
