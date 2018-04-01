@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
    login: FormGroup;
    emailfieldVald: boolean;
    passwordField: boolean;
+   keepmeloggedin: any;
+   loginObj: any;
    // private formSubmitAttempt: boolean;
   emailRegex;
   password;
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
             }
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('Token'));
     this.createform();
     this.getlanguages();
     this.emailfieldVald = false;
@@ -41,6 +44,7 @@ export class LoginComponent implements OnInit {
   onSubmit(value) {
     // this.formSubmitAttempt = true;
     // console.log(value.controls.Username);
+    // console.log(this.keepmeloggedin);
     if (value.controls.Username.valid === false) {
       this.emailfieldVald = true;
     } else if (value.controls.Password.valid === false) {
@@ -50,7 +54,11 @@ export class LoginComponent implements OnInit {
       this.passwordField = false;
       // console.log('form submitted');
       this.restservice.postCall('authorizeUser', value.value).subscribe(data => {
-       console.log(data);
+       console.log((<any>data)._body);
+       this.loginObj =  JSON.parse((<any>data)._body);
+       console.log(this.loginObj.token);
+       sessionStorage.setItem('Token', this.loginObj.token);
+       this.router.navigate(['/my-account']);
       }, err => {
         this.restservice.customalert('' , 'Invalid username/password, Please enter correct details' ,
         'Try Again' , 'btn-red' , 'red');

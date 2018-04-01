@@ -9,12 +9,14 @@ import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CreteAccountComponent } from './components/crete-account/crete-account.component';
 import {ApiServiceService } from './services/api-service.service';
+import { MyAccountComponent } from './components/my-account/my-account.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    CreteAccountComponent
+    CreteAccountComponent,
+    MyAccountComponent
   ],
   imports: [
     BrowserModule,

@@ -55,9 +55,10 @@
                     <span ><strong class="text-danger">Please Enter Password</strong></span>
                    </div>
                 <div class="form-group">
-                  <div class="checkbox checkbox-warning">
+                  <div class=" checkbox-warning">
+                      <input type="checkbox" value="remember-me"  [(ngModel)]="keepmeloggedin"/>
                     <label class="checkbox">Keep me signed in </label>
-                    <input type="checkbox" value="remember-me" />
+                    
                   </div>
                 </div>
                 <button class="btn btn-lg btn-block btn-primary" type="submit"  (click)="onSubmit(login)" > Sign in</button>
@@ -65,8 +66,8 @@
               <a class="forgotLnk" [routerLink]="['forgotPassword']" >Forgot password?</a>
               <div class="or-box"> <span class="or">OR continue with</span>
                 <div class="row">
-                  <div class="col-md-6 row-block"> <a href="#" class="btn btn-facebook btn-block"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i> Facebook</a> </div>
-                  <div class="col-md-6 row-block"> <a href="#" class="btn btn-google btn-block"><i class="fa fa-google fa-lg" aria-hidden="true"></i> Google</a> </div>
+                  <div class="col-md-6 row-block"> <a  class="btn btn-facebook btn-block"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i> Facebook</a> </div>
+                  <div class="col-md-6 row-block"> <a class="btn btn-google btn-block"><i class="fa fa-google fa-lg" aria-hidden="true"></i> Google</a> </div>
                 </div>
               </div>
               <div class="or-box row-block">
