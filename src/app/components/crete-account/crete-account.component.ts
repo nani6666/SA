@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from './../../services/api-service.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
+import {Keepalive} from '@ng-idle/keepalive';
 @Component({
   selector: 'app-crete-account',
   templateUrl: './crete-account.component.html',
   styleUrls: ['./crete-account.component.css']
 })
 export class CreteAccountComponent implements OnInit {
+  idleState = 'Not started.';
+  lastPing?: Date = null;
    languages: any;
    langArray: any;
    langobj: Array<Object> = [];
@@ -39,12 +43,37 @@ export class CreteAccountComponent implements OnInit {
    ismobileResgistred: boolean;
    passwordRegex;
   constructor(private serviceCall: ApiServiceService,
-    private formBuilder: FormBuilder, private router: Router) { 
+    private formBuilder: FormBuilder, private router: Router,
+    private idle: Idle, private keepalive: Keepalive) {
       this.emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       this.passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.+#_^])[A-Za-z\d$@$!%*?&.+#_^]{8}/;
+          // sets an idle timeout of 5 seconds, for testing purposes.
+    idle.setIdle(172790);
+    // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
+    idle.setTimeout(172790);
+    // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    idle.onIdleEnd.subscribe(() => this.idleState = 'No longer idle.');
+    idle.onTimeout.subscribe(() => {
+      this.idleState = 'Timed out!';
+      // this.timedOut = true;
+    });
+    idle.onIdleStart.subscribe(() => this.idleState = 'You\'ve gone idle!');
+    idle.onTimeoutWarning.subscribe((countdown) => {
+      this.idleState = 'You will time out in ' + countdown + ' seconds!' ;
+      sessionStorage.clear();
+    });
+    keepalive.interval(2);
+    keepalive.onPing.subscribe(() => this.lastPing = new Date());
+    // sets the ping interval to 15 seconds
+    this.reset();
     }
 
   ngOnInit() {
+    if (sessionStorage.getItem('Token') !== null ) {
+      this.router.navigate(['/my-account']);
+    }
     this.getlanguages();
     this.iama = true;
     this.companyInfo = false;
@@ -268,4 +297,8 @@ previoustab() {
       }
     }
 
+    reset() {
+      this.idle.watch();
+      this.idleState = 'Started.';
+    }
 }

@@ -12,7 +12,12 @@ export class ApiServiceService {
   username: any;
   password: any;
   headers: any;
-  constructor(private _http: Http) { }
+  idleState = 'Not started.';
+  timedOut = false;
+  lastPing?: Date = null;
+  constructor(private _http: Http) {
+
+  }
 
   /* get call starts */
   getCall(url): Observable<any> {
