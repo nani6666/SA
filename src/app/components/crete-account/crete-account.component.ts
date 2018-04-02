@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import {Keepalive} from '@ng-idle/keepalive';
+
+declare const jQuery: any;
 @Component({
   selector: 'app-crete-account',
   templateUrl: './crete-account.component.html',
@@ -18,6 +20,8 @@ export class CreteAccountComponent implements OnInit {
    iama: boolean;
    companyInfo: boolean;
    verification: boolean;
+   companyobj: any;
+   companyId: any;
    countries: any;
    countryobj: any;
    countrydata: any;
@@ -35,14 +39,24 @@ export class CreteAccountComponent implements OnInit {
    companyMobile2: any;
    contryIndia: any;
    whoAmI: any;
+   emaiIdExists: any;
    emailRegex;
    passwordValid: boolean;
    RegisteredBy: any;
+   phoneVerify: any;
+   EmailVerify: any;
    CompanyCurrency: any;
    emailIDregister: any;
    mobileIDregister: any;
    isEmailRegistered: boolean;
    ismobileResgistred: boolean;
+   otpEmailObj: any;
+   otpMobileObj: any;
+   otpEmailObjmsg: any ;
+   otpMobileObjmsg: any ;
+   verifyEmailObj: any ;
+   verifyMobileObj: any ;
+   fianlSubmit: boolean;
    passwordRegex;
   constructor(private serviceCall: ApiServiceService,
     private formBuilder: FormBuilder, private router: Router,
@@ -83,6 +97,7 @@ export class CreteAccountComponent implements OnInit {
     this.getCountries();
     this.accountCreation();
     this.passwordValid = false;
+    this.fianlSubmit = true ;
   //   this.serviceCall.getCall('http://34.245.8.159:8091/i4gorigin.accounts/getBaseCountryParamsOfSeller').subscribe(data => {
   //     console.log((<any>data)._body);
   //     const dataaa  = JSON.parse((<any>data)._body);
@@ -233,9 +248,12 @@ previoustab() {
       this.emailIDregister = JSON.parse((<any>data)._body);
       console.log(this.emailIDregister.message);
       if (this.emailIDregister.message == 'true') {
+       this.emaiIdExists = 'Email Id is already Exits';
        this.isEmailRegistered = true ;
-       this.serviceCall.customalert('' , 'Email is already Exits' ,
-         'ok' , 'btn-red' , 'red');
+       document.getElementById('emailId').click();
+      //  this.serviceCall.customalert('' , 'Email is already Exits' ,
+      //    'ok' , 'btn-red' , 'red');
+        //  this.dialog(emailExits);
       } else {
         this.isEmailRegistered = false ;
         this.ismobileRegistred();
@@ -250,7 +268,7 @@ previoustab() {
       'code': (this.countrydata === undefined) ? this.countryCode : this.countrydata.callingCode ,
       'number': this.companyMobile2
     };
-   console.log(mobile);
+  //  console.log(mobile);
     this.serviceCall.postCall('isMobileRegistered', mobile).subscribe(data => {
       this.mobileIDregister = JSON.parse((<any>data)._body);
       console.log(this.mobileIDregister.message);
@@ -299,15 +317,29 @@ previoustab() {
       };
       if (this.whoAmI == 'seller') {
         this.serviceCall.postCall('saveSellerProfile', buyer).subscribe(data => {
-          console.log(data);
+          this.companyobj = JSON.parse((<any>data)._body);
+          console.log(this.companyobj.message);
+          this.companyId = this.companyobj.message ;
+          this.otpEmail();
+          this.otpMobile();
         });
       } else if (this.whoAmI == 'buyer') {
         this.serviceCall.postCall('saveBuyerProfile', buyer).subscribe(data => {
           console.log(data);
+          this.companyobj = JSON.parse((<any>data)._body);
+          console.log(this.companyobj);
+          this.companyId = this.companyobj.message ;
+          this.otpEmail();
+          this.otpMobile();
         });
       } else if (this.whoAmI == 'frighten') {
         this.serviceCall.postCall('saveFreightProfile', buyer).subscribe(data => {
           console.log(data);
+          this.companyobj = JSON.parse((<any>data)._body);
+          console.log(this.companyobj);
+          this.companyId = this.companyobj.message ;
+          this.otpEmail();
+          this.otpMobile();
         });
       }
     }
@@ -316,4 +348,98 @@ previoustab() {
       this.idle.watch();
       this.idleState = 'Started.';
     }
+
+   
+
+/*go to sign page starts*/
+logoutPage() {
+  this.router.navigate(['']);
+}
+/*go to sign page ends */
+
+/*send verify Email starts*/
+otpEmail() {
+  const data = {
+    'Company': {
+      'CompanyID': this.companyId
+    }
+  };
+  this.serviceCall.postCall('sendVerifyEmail', data).subscribe(data1 => {
+    this.otpEmailObj = JSON.parse((<any>data1)._body);
+    console.log(this.companyobj);
+    this.otpEmailObjmsg = this.companyobj.message ;
+  });
+}
+/*send Verify Email Ends */
+
+/*send verify Mobile starts */
+otpMobile() {
+  const data = {
+    'Company': {
+      'CompanyID': this.companyId
+    }
+  };
+  this.serviceCall.postCall('sendVerifyMobile', data).subscribe(data1 => {
+    this.companyobj = JSON.parse((<any>data1)._body);
+    console.log(this.companyobj);
+  });
+}
+/*send Verify Mobile Ends */
+
+verifyEmailId() {
+  if (this.EmailVerify == '' || this.EmailVerify == undefined) {
+    this.serviceCall.customalert('' , 'Please Enter OTP' ,
+         'ok' , 'btn-red' , 'red');
+  } else {
+  const data = {
+    'Company': {
+      'CompanyID': this.companyId,
+      'Code': this.EmailVerify
+    }
+  };
+  this.serviceCall.postCall('validateEmailVerificationCode', data).subscribe(data1 => {
+    this.verifyEmailObj = JSON.parse((<any>data1)._body);
+    if (this.verifyEmailObj.message == 'false') {
+      this.fianlSubmit = true ;
+      this.serviceCall.customalert('' , 'Your OTP is not Valid,please Enter Correct OTP' ,
+      'ok' , 'btn-red' , 'red');
+    } else {
+      this.fianlSubmit = false ;
+      this.serviceCall.customalert('' , 'Your OTP is Valid,Thank you' ,
+        'ok' , 'btn-green' , 'green');
+    }
+  });
+ }
+}
+verifyMobileId() {
+  if (this.phoneVerify == '' || this.phoneVerify == undefined) {
+    this.serviceCall.customalert('' , 'Please Enter OTP' ,
+         'ok' , 'btn-red' , 'red');
+  } else {
+    const data = {
+      'Company': {
+        'CompanyID': this.companyId,
+        'Code': this.phoneVerify
+      }
+    };
+    this.serviceCall.postCall('validateMobileVerificationCode', data).subscribe(data1 => {
+      this.verifyMobileObj = JSON.parse((<any>data1)._body);
+      console.log(this.verifyMobileObj);
+      if (this.verifyMobileObj.message == 'false') {
+        this.fianlSubmit = true ;
+        this.serviceCall.customalert('' , 'Your OTP is not Valid,please Enter Correct OTP' ,
+        'ok' , 'btn-red' , 'red');
+      } else {
+        this.fianlSubmit = false ;
+        this.serviceCall.customalert('' , 'Your OTP is Valid,Thank you' ,
+        'ok' , 'btn-green' , 'green');
+      }
+    });
+  }
+}
+
+ finalSubmit() {
+  this.emaiIdExists = 'Thank you for registering. Please proceed to login Page';
+        document.getElementById('emailId').click();
+ }
 }

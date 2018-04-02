@@ -99,17 +99,17 @@
                 <div class="form-group">
                     <div id="affected">
                         <div class="zInputWrapper">
-                              <div class="zInput">
+                              <div class="zInput btn">
                                 <span style="display:table;width: 100%;height: 100%;cursor:pointer;" (click)="firsttab('seller')">
                                     <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-user"></i>
                                       Seller from India</span></span>
                               </div>
-                              <div class="zInput">
+                              <div class="zInput btn">
                                 <span style="display:table;width: 100%;height: 100%;cursor:pointer;"  (click)="firsttab('buyer')">
                                   <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-shopping-cart"></i>
                               Buyer outside India</span></span>
                             </div>
-                            <div class="zInput">
+                            <div class="zInput btn">
                                 <span style="display:table;width: 100%;height: 100%; cursor:pointer;"  (click)="firsttab('frighten')">
                                     <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-shopping-cart"></i>
                                 Frieght</span></span>
@@ -242,23 +242,24 @@
                 <p>An OTP has been sent to your Mobile Number. Please enter the 4 digit OTP below for successful verification.</p>
                 <div>
                   <div class="form-group col-sm-4 pad0L">
-                    <input type="text" class="form-control" name="otp" placeholder="Enter your OTP number" required>
-                    <a >Resend OTP</a> </div>
-                  <button type="submit" class="btn btn-info  col-sm-2">Verify</button>
+                    <input type="number" class="form-control" name="otp" [(ngModel)]="phoneVerify" [ngModelOptions]="{standalone: true}"
+                     placeholder="Enter your OTP number" required>
+                    <a (click)="otpMobile()" (click)="otpEmail()">Resend OTP</a> </div>
+                  <button type="button" class="btn btn-info  col-sm-2" (click)="verifyMobileId()">Verify</button>
                 </div>
                 <div class="clear mrg20B"></div>
                 <h4>Verify your Email ID:</h4>
                 <p>An OTP has been sent to your Email ID. Please enter the 4 digit OTP below for successful verification.</p>
                 <div>
                   <div class="form-group col-sm-4 pad0L">
-                    <input type="text" class="form-control" name="otp" placeholder="Enter your OTP number" required>
-                    <a >Resend OTP</a> </div>
-                  <button type="submit" class="btn btn-info  col-sm-2">Verify</button>
+                    <input type="number" class="form-control" name="otp" [(ngModel)]="EmailVerify" [ngModelOptions]="{standalone: true}" placeholder="Enter your OTP number" required>
+                    <a (click)="otpMobile()" >Resend OTP</a> </div>
+                  <button type="button" class="btn btn-info  col-sm-2" (click)="verifyEmailId()">Verify</button>
                 </div>
                 <div class="clear mrg20B"></div>
                 <div class="f1-buttons">
                   <!-- <button type="button" class="btn btn-previous">Previous</button> -->
-                  <button type="submit" class="btn btn-submit">Submit</button>
+                  <button type="button" class="btn btn-submit" [disabled]="fianlSubmit" (click)="finalSubmit()">Submit</button>
                 </div>
               </div>
 
@@ -380,3 +381,25 @@
     <!-- //end Footer Container -->
 
   </div>
+
+  <!-- /*modal window starts */ -->
+  <button style="display:none;" id="emailId" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>{{emaiIdExists}}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="logoutPage()">Sign In</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- /*modal window Ends */ -->
