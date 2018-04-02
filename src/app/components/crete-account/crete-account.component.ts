@@ -29,9 +29,11 @@ export class CreteAccountComponent implements OnInit {
    createAcc: FormGroup;
    checkingPassword: boolean;
    companylandline1: any;
+   countryChangediv: boolean ;
    companylandline2: any;
    companyMobile1: any;
    companyMobile2: any;
+   contryIndia: any;
    whoAmI: any;
    emailRegex;
    passwordValid: boolean;
@@ -101,12 +103,13 @@ const postData = {
  accountCreation() {
   this.createAcc = this.formBuilder.group({
     companyName: ['', [Validators.required]],
-    companyLocation: ['', [Validators.required]],
+    companyLocation: ['', ''],
     companyEmail : ['', [Validators.required , Validators.minLength(5), Validators.maxLength(50), Validators.pattern(this.emailRegex)]],
     companyPswrd : ['', [Validators.required , Validators.minLength(8), Validators.maxLength(29), Validators.pattern(this.passwordRegex)]],
     companyCnfPswd : ['', [Validators.required , Validators.minLength(8), Validators.maxLength(29),
                Validators.pattern(this.passwordRegex)]],
     companyMobile2: ['', [Validators.required]],
+    contryIndia: ['', ''],
     companyMobile1: ['', ''],
     companylandline1: ['', ''],
     companylandline2: ['', '']
@@ -129,6 +132,18 @@ const postData = {
   firsttab(val) {
    console.log(val);
    this.whoAmI = val ;
+   if (this.whoAmI == 'seller') {
+     this.countryChangediv = false ;
+     this.contryIndia = 'India';
+     this.countryCode = '+91' ;
+    this.RegisteredBy = 'Seller';
+   } else if (this.whoAmI == 'buyer') {
+    this.countryChangediv = true ;
+    this.RegisteredBy = 'Buyer';
+   } else if (this.whoAmI == 'frighten') {
+    this.RegisteredBy = 'Frighten';
+    this.countryChangediv = true ;
+   }
    }
 
 
@@ -182,11 +197,11 @@ if (this.whoAmI === undefined) {
        if (this.createAcc.valid != true) {
         this.serviceCall.customalert('' , 'Please Enter the mandiatory Fields' ,
         'ok' , 'btn-red' , 'red');
-      }  if (this.createAcc.controls.companyPswrd.valid === false) {
+       } else if (this.createAcc.controls.companyPswrd.valid === false) {
         this.serviceCall.customalert('' , 'Password should be of minimum 8 chars and max 29 chars. Atleast 1 Uppercase,' +
          '1 Lowercase and 1 special character' ,
         'ok' , 'btn-red' , 'red');
-      } else {
+       } else {
         this.isemailRegister();
       }
    }
@@ -229,11 +244,13 @@ previoustab() {
   }
 
   ismobileRegistred() {
+    // let callingcode  = this.countrydata ;
+    // console.log(callingcode);
     const mobile = {
-      'code': this.countrydata.callingCode,
+      'code': (this.countrydata === undefined) ? this.countryCode : this.countrydata.callingCode ,
       'number': this.companyMobile2
     };
-   // console.log(mobile);
+   console.log(mobile);
     this.serviceCall.postCall('isMobileRegistered', mobile).subscribe(data => {
       this.mobileIDregister = JSON.parse((<any>data)._body);
       console.log(this.mobileIDregister.message);
@@ -265,15 +282,15 @@ previoustab() {
           'CompanyName': this.companyName,
           'CompanyDefaultLanguage': 'English',
           'CompanyEmail': this.companyEmail,
-          'CompanyCurrency': this.countrydata.currencies[0].code,
+          'CompanyCurrency':  (this.countrydata === undefined) ? 'Rupee' :  this.countrydata.currencies[0].code,
           'Password': this.companyPswrd,
           'CompanyContactPersonFirstName': 'fName',
           'CompanyContactPersonSurname': 'sName',
-          'CompanyBusinessLandlineCode': this.countrydata.callingCode,
+          'CompanyBusinessLandlineCode': (this.countrydata === undefined) ? this.countryCode : this.countrydata.callingCode,
           'CompanyBusinessLandlineNumber': (this.companylandline2 === undefined ) ? '123' : this.companylandline2,
-          'CompanyBusinessMobileCode': this.countrydata.callingCode,
+          'CompanyBusinessMobileCode': (this.countrydata === undefined) ? this.countryCode : this.countrydata.callingCode,
           'CompanyBusinessMobileNumber': this.companyMobile2,
-          'BusinessLocation': this.countrydata.name,
+          'BusinessLocation': (this.countrydata === undefined) ? 'India' :  this.countrydata.name,
           'AgreeToRecieveEmail': 'Y',
           'AgreeToRecieveSMS': 'Y',
           'AgreeTermsAndConditions': 'Y',
@@ -281,8 +298,6 @@ previoustab() {
         }
       };
       if (this.whoAmI == 'seller') {
-        this.RegisteredBy = 'Seller';
-        console.log(buyer);
         this.serviceCall.postCall('saveSellerProfile', buyer).subscribe(data => {
           console.log(data);
         });
