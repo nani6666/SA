@@ -24,7 +24,4 @@
     border-color: #2ecc71;
 }
 
-/* error display font italic, text-danger is red in BS */
-.validation.text-danger {
-    font-style: italic;
-}
+

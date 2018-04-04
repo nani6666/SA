@@ -1,0 +1,10 @@
+/* invalid & (dirty or touched) => red -- CSS3 only */
+.ng-invalid.ng-dirty:not(:focus),
+.ng-invalid.ng-touched:not(:focus) {
+    border-color: #e74c3c;
+}
+
+/* valid & dirty => green */
+.ng-valid.ng-dirty.ng-touched {
+    border-color: #2ecc71;
+}
