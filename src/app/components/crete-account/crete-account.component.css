@@ -8,6 +8,10 @@
   background: black;
   color:#fff;
 }
+.zInput:target {
+   background: #000;
+  color:#fff;
+}
 
 /* invalid & (dirty or touched) => red -- CSS3 only */
 .ng-invalid.ng-dirty:not(:focus),
