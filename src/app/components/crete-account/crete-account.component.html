@@ -73,7 +73,7 @@
 
       <div class="row">
         <div class="col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2 form-box">
-          <form role="form" action="" class="f1" [formGroup]="createAcc">
+
 
             <div *ngIf="iama">
                 <div class="f1-steps">
@@ -99,22 +99,51 @@
                 <div class="form-group">
                     <div id="affected">
                         <div class="zInputWrapper">
-                              <div class="zInput ">
+                              <div class="zInput " id="seller">
                                 <span style="display:table;width: 100%;height: 100%;cursor:pointer;" (click)="firsttab('seller')">
                                     <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-user"></i>
                                       Seller from India</span></span>
                               </div>
-                              <div class="zInput ">
+                              <div class="zInput" id="buyer">
                                 <span style="display:table;width: 100%;height: 100%;cursor:pointer;"  (click)="firsttab('buyer')">
                                   <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-shopping-cart"></i>
                               Buyer outside India</span></span>
                             </div>
-                            <div class="zInput">
+                            <div class="zInput" id="frighten">
                                 <span style="display:table;width: 100%;height: 100%; cursor:pointer;"  (click)="firsttab('frighten')">
                                     <span style="display: table-cell;vertical-align:middle;"><i class="fa fa-shopping-cart"></i>
                                 Frieght</span></span>
                             </div>
+                            <div class="row" style="padding-left:25px;">
+                                <div class="col-md-4" >
+                                  <div class="form-group" *ngIf="sellerField">
+                                    <label class="control-label">Seller</label>
+                                       <select class="form-control" [(ngModel)]="sellerOptions">
+                                          <option value="">Choose Option</option>
+                                          <option value="Manufacturer">Manufacturer</option>
+                                          <option value="Exporter">Exporter</option>
+                                          <option value="Make In India">Make In India</option>
+                                          <option value="Service Provider">Service Provider</option>
+                                       </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-4" >
+                                    <div class="form-group"  *ngIf="buyerfield">
+                                        <label class="control-label">Buyer</label>
+                                        <select class="form-control" [(ngModel)]="buyerOptions">
+                                            <option value="">Choose Option</option>
+                                            <option value="Manufacturer">Manufacturer</option>
+                                            <option value="Importer">Importer</option>
+                                            <option value="Distributer">Distributer</option>
+                                            <option value="Chain Store">Chain Store</option>
+                                            <option value="Retailer">Retailer</option>
+                                            <option value="Buyer (Consumer)">Buyer (Consumer)</option>
+                                          </select>
+                                    </div>
+                                  </div>
+                             </div>
                          </div>
+
                       </div>
                 </div>
                 <div class="clear mrg45B"></div>
@@ -144,7 +173,7 @@
                     </div>
                   </div>
               <div class="col-md-12" style="padding-bottom:50px;">
-
+                  <form role="form" action="" class="f1" [formGroup]="createAcc">
                 <div class="form-group col-md-12 pad0A">
                   <label class="" >Company Name <span><strong>*</strong></span></label>
                   <input type="text" name=" " placeholder="Company Name" formControlName="companyName" [(ngModel)]="companyName"
@@ -213,10 +242,10 @@
                 <div class="clear mrg20B"></div>
                 <div class="f1-buttons">
                   <button type="button" class="btn btn-previous" (click)="previoustab()">Previous</button>
-                  <button type="button" class="btn btn-next" (click)="nexttab('cmpnyInfo')">Next</button>
+                  <button type="submit" class="btn btn-next" (click)="nexttab('cmpnyInfo')">Next</button>
                 </div>
+              </form>
               </div>
-
             </div>
             <div *ngIf="verification">
               <div class="f1-steps">
@@ -264,12 +293,29 @@
               </div>
 
             </div>
-          </form>
+
         </div>
       </div>
     </div>
     <!-- //Main Container -->
-
+     <!-- /*modal window Starts */ -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p class="text-danger">{{emaiIdExists}}</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-danger" routerLink="" >Sign In</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- /*modal window Ends */ -->
     <!-- Footer Container -->
     <footer class="footer-container type_footer3">
       <!-- Footer Top Container -->
@@ -376,6 +422,8 @@
         </div>
       </div>
       <!-- /Footer Bottom Container -->
+      <!-- Modal -->
+
 
     </footer>
     <!-- //end Footer Container -->
@@ -385,21 +433,4 @@
   <!-- /*modal window starts */ -->
   <button style="display:none;" id="emailId" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button>
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>{{emaiIdExists}}</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-success" (click)="logoutPage()">Sign In</button>
-          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-   <!-- /*modal window Ends */ -->
+

@@ -12,7 +12,14 @@
    background: #000;
   color:#fff;
 }
+.zhover{
+  background: #000;
+  color:#fff;
+}
 
+select{
+  -webkit-appearance : menulist;
+}
 /* invalid & (dirty or touched) => red -- CSS3 only */
 .ng-invalid.ng-dirty:not(:focus),
 .ng-invalid.ng-touched:not(:focus) {

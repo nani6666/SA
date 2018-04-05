@@ -20,6 +20,10 @@ export class CreteAccountComponent implements OnInit {
    iama: boolean;
    companyInfo: boolean;
    verification: boolean;
+   sellerOptions: any;
+   buyerOptions: any;
+   sellerField: boolean ;
+   buyerfield: boolean ;
    companyobj: any;
    companyId: any;
    countries: any;
@@ -148,16 +152,38 @@ const postData = {
    console.log(val);
    this.whoAmI = val ;
    if (this.whoAmI == 'seller') {
+     document.getElementById('seller').classList.add('zhover');
+     document.getElementById('frighten').classList.remove('zhover');
+    document.getElementById('buyer').classList.remove('zhover');
+   //  document.getElementById('seller').setAttribute('class', 'zInput');
+     this.sellerField = true ;
+     this.buyerfield = false ;
      this.countryChangediv = false ;
      this.contryIndia = 'India';
      this.countryCode = '+91' ;
     this.RegisteredBy = 'Seller';
+    console.log(this.buyerOptions) ;
+    console.log(this.sellerOptions) ;
    } else if (this.whoAmI == 'buyer') {
+    this.sellerField = false ;
+    this.buyerfield =  true ;
+    document.getElementById('seller').classList.remove('zhover');
+    document.getElementById('buyer').classList.add('zhover');
+    document.getElementById('frighten').classList.remove('zhover');
     this.countryChangediv = true ;
     this.RegisteredBy = 'Buyer';
+    console.log(this.buyerOptions) ;
+    console.log(this.sellerOptions) ;
    } else if (this.whoAmI == 'frighten') {
+    this.sellerField = false ;
+    this.buyerfield = false ;
+    document.getElementById('seller').classList.remove('zhover');
+    document.getElementById('buyer').classList.remove('zhover');
+    document.getElementById('frighten').classList.add('zhover');
     this.RegisteredBy = 'Frighten';
     this.countryChangediv = true ;
+    console.log(this.buyerOptions) ;
+    console.log(this.sellerOptions) ;
    }
    }
 
@@ -204,10 +230,36 @@ if (this.whoAmI === undefined) {
   this.serviceCall.customalert('' , 'Please Click any button' ,
   'ok' , 'btn-red' , 'red');
 } else {
-  if (val == 'iama') {
-    this.iama = false ;
-    this.companyInfo = true;
-    this.verification = false ;
+    if (val == 'iama') {
+      if (this.whoAmI == 'seller') {
+        if (this.sellerOptions === undefined ) {
+          this.serviceCall.customalert('' , 'Please Choose one of the option' ,
+          'ok' , 'btn-red' , 'red');
+        } else if (this.sellerOptions == ''){
+          this.serviceCall.customalert('' , 'Please Choose one of the option' ,
+          'ok' , 'btn-red' , 'red');
+        } else {
+          this.iama = false ;
+          this.companyInfo = true;
+          this.verification = false ;
+        }
+       } else if (this.whoAmI == 'buyer') {
+        if (this.buyerOptions === undefined) {
+          this.serviceCall.customalert('' , 'Choose any of one Option' ,
+          'ok' , 'btn-red' , 'red');
+        } else if (this.buyerOptions == '') {
+          this.serviceCall.customalert('' , 'Choose any of one Option' ,
+          'ok' , 'btn-red' , 'red');
+        } else {
+          this.iama = false ;
+          this.companyInfo = true;
+          this.verification = false ;
+        }
+       } else if (this.whoAmI == 'frighten') {
+           this.iama = false ;
+          this.companyInfo = true;
+          this.verification = false ;
+       }
     } else if (val == 'cmpnyInfo') {
        if (this.createAcc.valid != true) {
         this.serviceCall.customalert('' , 'Please Enter the mandiatory Fields' ,
@@ -248,7 +300,8 @@ previoustab() {
       this.emailIDregister = JSON.parse((<any>data)._body);
       console.log(this.emailIDregister.message);
       if (this.emailIDregister.message == 'true') {
-       this.emaiIdExists = 'Email Id is already Exits';
+       this.emaiIdExists = 'Account already exists with this email address. Please enter different email address' +
+                                'or Login if you already have an account with us.';
        this.isEmailRegistered = true ;
        document.getElementById('emailId').click();
       //  this.serviceCall.customalert('' , 'Email is already Exits' ,
@@ -349,7 +402,7 @@ previoustab() {
       this.idleState = 'Started.';
     }
 
-   
+
 
 /*go to sign page starts*/
 logoutPage() {
@@ -388,7 +441,7 @@ otpMobile() {
 
 verifyEmailId() {
   if (this.EmailVerify == '' || this.EmailVerify == undefined) {
-    this.serviceCall.customalert('' , 'Please Enter OTP' ,
+    this.serviceCall.customalert('' , 'Please enter OTP to verify' ,
          'ok' , 'btn-red' , 'red');
   } else {
   const data = {
@@ -413,7 +466,7 @@ verifyEmailId() {
 }
 verifyMobileId() {
   if (this.phoneVerify == '' || this.phoneVerify == undefined) {
-    this.serviceCall.customalert('' , 'Please Enter OTP' ,
+    this.serviceCall.customalert('' , 'Please enter OTP to verify' ,
          'ok' , 'btn-red' , 'red');
   } else {
     const data = {
