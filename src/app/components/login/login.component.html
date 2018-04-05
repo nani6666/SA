@@ -44,16 +44,16 @@
                   <label>Username</label>
                   <input type="text" class="form-control" placeholder="Username" formControlName="Username" required autofocus />
                 </div>
-                <div *ngIf="emailfieldVald">
+                <!-- <div *ngIf="emailfieldVald">
                  <span ><strong class="text-danger">Please Enter Valid Email</strong></span>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label>Password</label>
                   <input type="password" class="form-control" placeholder="Password" formControlName="Password" required />
                 </div>
-                <div *ngIf="passwordField">
+                <!-- <div *ngIf="passwordField">
                     <span ><strong class="text-danger">Please Enter Password</strong></span>
-                   </div>
+                   </div> -->
                 <div class="form-group">
                   <div class=" checkbox-warning">
                       <label  style="word-wrap:break-word">
@@ -65,12 +65,12 @@
                 <button class="btn btn-lg btn-block btn-primary" type="submit"  (click)="onSubmit(login)" > Sign in</button>
               </form>
               <a class="forgotLnk" [routerLink]="['forgotPassword']" >Forgot password?</a>
-              <div class="or-box"> <span class="or">OR continue with</span>
+              <!-- <div class="or-box"> <span class="or">OR continue with</span>
                 <div class="row">
                   <div class="col-md-6 row-block"> <a  class="btn btn-facebook btn-block"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i> Facebook</a> </div>
                   <div class="col-md-6 row-block"> <a class="btn btn-google btn-block"><i class="fa fa-google fa-lg" aria-hidden="true"></i> Google</a> </div>
                 </div>
-              </div>
+              </div> -->
               <div class="or-box row-block">
                 <div class="row">
                   <div class="col-md-12 row-block"> <a [routerLink]="['createAccount']" class="btn btn-primary btn-block">Create New Account</a> </div>

@@ -74,10 +74,11 @@ export class LoginComponent implements OnInit {
     // console.log(value.controls.Username);
      console.log(this.keepmeloggedin);
     if (value.controls.Username.valid === false) {
-      this.emailfieldVald = true;
+      this.restservice.customalert('' , 'Please enter Valid Email' ,
+        'ok' , 'btn-red' , 'red');
     } else if (value.controls.Password.valid === false) {
-      this.emailfieldVald = false;
-      this.passwordField = true;
+      this.restservice.customalert('' , 'Please enter Password' ,
+        'ok' , 'btn-red' , 'red');
     } else {
       this.passwordField = false;
       // console.log('form submitted');
@@ -90,6 +91,7 @@ export class LoginComponent implements OnInit {
       }, err => {
         this.restservice.customalert('' , 'Invalid username/password, Please enter correct details' ,
         'Try Again' , 'btn-red' , 'red');
+        this.login.reset();
     });
     }
    }

@@ -123,9 +123,9 @@ const postData = {
     companyPswrd : ['', [Validators.required , Validators.minLength(8), Validators.maxLength(29), Validators.pattern(this.passwordRegex)]],
     companyCnfPswd : ['', [Validators.required , Validators.minLength(8), Validators.maxLength(29),
                Validators.pattern(this.passwordRegex)]],
-    companyMobile2: ['', [Validators.required]],
+    companyMobile2: ['', [Validators.required , Validators.minLength(7), Validators.maxLength(7)]],
     contryIndia: ['', ''],
-    companyMobile1: ['', ''],
+    companyMobile1: ['', [Validators.required , Validators.minLength(3), Validators.maxLength(3)]],
     companylandline1: ['', ''],
     companylandline2: ['', '']
   });
@@ -307,7 +307,7 @@ previoustab() {
           'CompanyBusinessLandlineCode': (this.countrydata === undefined) ? this.countryCode : this.countrydata.callingCode,
           'CompanyBusinessLandlineNumber': (this.companylandline2 === undefined ) ? '123' : this.companylandline2,
           'CompanyBusinessMobileCode': (this.countrydata === undefined) ? this.countryCode : this.countrydata.callingCode,
-          'CompanyBusinessMobileNumber': this.companyMobile2,
+          'CompanyBusinessMobileNumber': this.companyMobile1 + this.companyMobile2,
           'BusinessLocation': (this.countrydata === undefined) ? 'India' :  this.countrydata.name,
           'AgreeToRecieveEmail': 'Y',
           'AgreeToRecieveSMS': 'Y',

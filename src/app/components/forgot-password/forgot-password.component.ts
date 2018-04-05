@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
     keepalive.interval(2);
     keepalive.onPing.subscribe(() => this.lastPing = new Date());
     // sets the ping interval to 15 seconds
-    this.reset();
+    this.resetsssss();
     }
 
   ngOnInit() {
@@ -83,23 +83,33 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(val) {
+    console.log(val);
+    const errString = 'Couldn’t find any account with this email address ' + val.value.email +
+                       '. Please check.',
+           successmsg = 'Email has been sent to your ' + val.value.email + '.Please check your inbox';
+
     if (val.controls.email.valid === false) {
       this.emailField = true;
     } else {
       this.emailField = false;
       this.restservice.postCall('sendUserCredentials', val.value).subscribe(data => {
-        console.log(data);
-        this.restservice.customalert('' , 'Success' ,
+       console.log(data);
+       if (JSON.parse((<any>data)._body).message == 'Success') {
+        this.restservice.customalert('' , successmsg ,
         'ok' , 'btn-green' , 'green');
+        this.forgottenPassword.reset();
+       }
+
        }, err => {
-         this.restservice.customalert('' , 'Invalid Email ,This Email is not Registred' ,
-         'Try Again' , 'btn-red' , 'red');
+         this.restservice.customalert('' ,  errString,
+         'OK' , 'btn-red' , 'red');
+         this.forgottenPassword.reset();
      });
     }
 
   }
 
-  reset() {
+  resetsssss() {
     this.idle.watch();
     this.idleState = 'Started.';
     this.timedOut = false;
